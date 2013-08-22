@@ -1,7 +1,7 @@
 var sys = require("util")
   , assert = require("assert")
   , http = require("http")
-  , XMLHttpRequest = require("../lib/XMLHttpRequest").XMLHttpRequest
+  , XMLHttpRequest = require("../lib/XMLHttpRequest")()
   , xhr;
 
 // Test server

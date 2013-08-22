@@ -1,6 +1,6 @@
 var sys = require("util")
   , assert = require("assert")
-  , XMLHttpRequest = require("../lib/XMLHttpRequest").XMLHttpRequest
+  , XMLHttpRequest = require("../lib/XMLHttpRequest")()
   , xhr = new XMLHttpRequest();
 
 // Test constant values
