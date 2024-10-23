@@ -15,17 +15,19 @@ var url = "http://localhost:8889";
 
 var repeats = 0;
 var maxMessages = 20;
-const interval = setInterval(function sendRequest() {
+var interval = setInterval(function sendRequest() {
   xhr.open("GET", url);
   xhr.onloadend = function(event) {
     if (xhr.status !== 200) {
       console.error('Error: non-200 xhr response, message is\n', xhr.responseText);
       clearInterval(interval);
+      agent.destroy();
       server.close();
     }
     if (repeats++ > maxMessages) {
       console.log('Done.');
       clearInterval(interval);
+      agent.destroy();
       server.close();
     }
   }

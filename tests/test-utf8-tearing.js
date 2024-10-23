@@ -45,7 +45,7 @@ var serverProcess;
  */
 function ta_to_hexStr(ta) {
   var u8 = new Uint8Array(ta.buffer);
-  return u8.reduce(function (acc, cur) { return acc + String.fromCharCode(cur), ""});
+  return u8.reduce(function (acc, cur) { return acc + String.fromCharCode(cur) }, "");
 }
 
 /**
@@ -56,8 +56,8 @@ function ta_to_hexStr(ta) {
  */
 function createFloat32Array(N) {
   assert(N > 0);
-  let ta = new Float32Array(N);
-  for (let k = 0; k < ta.length; k++)
+  var ta = new Float32Array(N);
+  for (var k = 0; k < ta.length; k++)
     ta[k] = Math.random();
   //ta = new Float32Array([1, 5, 6, 7]); // Use to debug
   return ta;
@@ -132,7 +132,7 @@ createServer(buffer, bufferUtf8);
  */
 function hexStr_to_ta(hexStr) {
   var u8 = new Uint8Array(hexStr.length);
-  for (let k = 0; k < hexStr.length; k++)
+  for (var k = 0; k < hexStr.length; k++)
     u8[k] = Number(hexStr.charCodeAt(k));
   return new Float32Array(u8.buffer);
 }
@@ -151,7 +151,7 @@ function checkEnough(ta1, ta2, count = 1000) {
   if (ta1.constructor.name !== ta2.constructor.name) return false;
   if (ta1.length !== ta2.length) return false;
   if (ta1.byteOffset !== ta2.byteOffset) return false;
-  for (let k = 0; k < Math.min(count, ta1.length); k++) {
+  for (var k = 0; k < Math.min(count, ta1.length); k++) {
     if (ta1[k] !== ta2[k]) {
       log('checkEnough: Not Equal!', k, ta1[k], ta2[k]);
       return false;
