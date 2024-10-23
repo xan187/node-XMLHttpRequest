@@ -30,6 +30,11 @@
     "lib": "./lib",
     "example": "./example"
   },
+  "files": [
+    "lib/XMLHttpRequest.js",
+    "LICENSE",
+    "README.md"
+  ],
   "main": "./lib/XMLHttpRequest.js",
   "dependencies": {}
 }
