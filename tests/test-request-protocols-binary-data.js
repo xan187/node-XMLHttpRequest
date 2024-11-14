@@ -1,39 +1,81 @@
-var sys = require("util")
-  , assert = require("assert")
-  , XMLHttpRequest = require("../lib/XMLHttpRequest").XMLHttpRequest
-  , xhr;
+/**
+ * Test GET file URL with both async and sync mode.
+ * Use xhr.responseType = "arraybuffer".
+ */
+'use strict';
+var XMLHttpRequest = require("../lib/XMLHttpRequest").XMLHttpRequest
 
-xhr = new XMLHttpRequest();
-
-xhr.onreadystatechange = function() {
-  if (this.readyState == 4) {
-    assert.equal("0000 803f 0000 a040 0000 c040 0000 e040", logBinary(this.response.toString('binary')));
-    runSync();
-  }
-};
-
-// Async
-var url = "file://" + __dirname + "/testBinaryData";
-xhr.open("GET", url);
-xhr.send();
-
-// Sync
-var runSync = function() {
-  xhr = new XMLHttpRequest();
-
-  xhr.onreadystatechange = function() {
-    if (this.readyState == 4) {
-      assert.equal("0000 803f 0000 a040 0000 c040 0000 e040", logBinary(this.response.toString('binary')));
-      console.log("done");
-    }
-  };
-  xhr.open("GET", url, false);
-  xhr.send();
+const supressConsoleOutput = true;
+function log (_) {
+  if ( !supressConsoleOutput)
+    console.log(arguments);
 }
+
+var url = "file://" + __dirname + "/testBinaryData";
+
+function download (url, isAsync) {
+  if (isAsync === undefined)
+    isAsync = true;
+  var xhr = new XMLHttpRequest();
+  return new Promise((resolve, reject) => {
+    xhr.open("GET", url, true);
+
+    xhr.responseType =  'arraybuffer';
+
+    xhr.onloadend = () => {
+      if (xhr.status >= 200 && xhr.status < 300)
+        resolve(xhr.response);
+      else
+      {
+        const errorTxt = `${xhr.status}: ${xhr.statusText}`;
+        reject(errorTxt);
+      }
+    };
+
+    xhr.send();
+  });
+}
+
+function runTest () {
+  // Async
+  var ab = download(url, /*isAsyn*/ true);
+  return ab.then(afterAsyncDownload);
+}
+
+function afterAsyncDownload(ab) {  
+  var str = Buffer.from(ab).toString('binary');
+  var strLog = logBinary(str);
+  log('async phase', strLog);
+  if ("0000 803f 0000 a040 0000 c040 0000 e040" !== strLog)
+    throw new Error(`Failed test-request-protocols-binary-data async phase: "0000 803f 0000 a040 0000 c040 0000 e040" !== ${strLog}`);
+  log("done async phase");
+
+  // Sync
+  var abSync = download(url, /*isAsyn*/ false);
+  return abSync.then(afterSyncDownload);
+}
+
+function afterSyncDownload(abSync) {
+  var str = Buffer.from(abSync).toString('binary');
+  var strLog = logBinary(str);
+  log('sync phase', strLog);
+  if ("0000 803f 0000 a040 0000 c040 0000 e040" !== strLog)
+    throw new Error(`Failed test-request-protocols-binary-data sync phase: "0000 803f 0000 a040 0000 c040 0000 e040" !== ${strLog}`);
+  log("done sync phase");
+}
+
+runTest()
+  .then(() => console.log('PASSED'))
+  .catch((e) => { console.error('FAILED'); throw e; });
 
 function logBinary(data) {
   function log(data, idx) {
-    return data.charCodeAt(idx).toString(16).padStart(2, '0');
+    const char = data.charCodeAt(idx).toString(16);
+    // node compatibility: padStart doesn't exist to make sure return is 2 characters
+    if (char.length === 1)
+      return '0' + char;
+    else
+      return char;
   }
   if (!data) return 'no data';
   if (typeof data !== 'string') return 'not a string';
