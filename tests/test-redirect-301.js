@@ -7,12 +7,10 @@ var sys = require("util")
 // Test server
 var server = http.createServer(function (req, res) {
   if (req.url === '/redirectingResource') {
-    res.writeHead(307, {'Location': 'http://localhost:8000/'});
+    res.writeHead(301, {'Location': 'http://localhost:8000/'});
     res.end();
     return;
   }
-
-  assert.equal(req.method, 'POST');
 
   var body = "Hello World";
   res.writeHead(200, {
@@ -36,7 +34,7 @@ xhr.onreadystatechange = function() {
 };
 
 try {
-  xhr.open("POST", "http://localhost:8000/redirectingResource");
+  xhr.open("GET", "http://localhost:8000/redirectingResource");
   xhr.send();
 } catch(e) {
   console.log("ERROR: Exception raised", e);
