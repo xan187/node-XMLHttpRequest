@@ -13,7 +13,6 @@
  *     // Construct responseText from response
  *     self.responseText = self.response.toString('utf8');
  */
-// @ts-check
 'use strict';
 
 var assert = require("assert");

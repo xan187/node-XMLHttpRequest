@@ -1,5 +1,4 @@
-var sys = require("util")
-  , assert = require("assert")
+var assert = require("assert")
   , XMLHttpRequest = require("../lib/XMLHttpRequest").XMLHttpRequest
   , xhr;
 
@@ -99,7 +98,7 @@ var runSyncTest = function (test) {
     assert.equal(xhr.status, 0);
     assert.equal(e.message, test.error);
   }
-  console.log("    --> SUCESS");
+  console.log("    --> SUCCESS");
   ++tests_passed;
 }
 
@@ -121,7 +120,10 @@ var startTest = function () {
     try {
       runSyncTest(test);
     }
-    catch (e) { console.error(e) };
+    catch (e) {
+      console.error(e);
+      throw e;
+    };
     console.log("");
     ++i;
     startTest();

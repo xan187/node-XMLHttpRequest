@@ -1,5 +1,4 @@
-var sys = require("util")
-  , assert = require("assert")
+var assert = require("assert")
   , XMLHttpRequest = require("../lib/XMLHttpRequest").XMLHttpRequest
   , xhr;
 
@@ -9,8 +8,12 @@ xhr.onreadystatechange = function() {
   if (this.readyState === 4) {
     assert.equal(this.statusText, "Not allowed to load local resource: " + url);
     assert.equal(this.status, 0);
-    try { runSync(); } catch (e) {
-      if (e instanceof assert.AssertionError) console.error(e);
+    try {
+      runSync();
+    } catch (e) {
+      if (e instanceof assert.AssertionError) {
+        throw e;
+      }
     }
   }
 };

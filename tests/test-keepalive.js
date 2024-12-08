@@ -1,3 +1,4 @@
+var assert = require("assert");
 var http = require('http');
 var { XMLHttpRequest } = require("../lib/XMLHttpRequest");
 
@@ -23,6 +24,7 @@ var interval = setInterval(function sendRequest() {
       clearInterval(interval);
       agent.destroy();
       server.close();
+      assert.equal(xhr.status, 200);
     }
     if (repeats++ > maxMessages) {
       console.log('Done.');

@@ -2,7 +2,6 @@
 /******************************************************************************************
  * This test measurs the elapsed time to download a Float32Array of length 100,000,000.
  */
-// @ts-check
 'use strict';
 
 const http = require("http");

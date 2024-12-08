@@ -38,7 +38,7 @@ function download (url, isAsync) {
 
 function runTest () {
   // Async
-  var ab = download(url, /*isAsyn*/ true);
+  var ab = download(url, /*isAsync*/ true);
   return ab.then(afterAsyncDownload);
 }
 
@@ -51,7 +51,7 @@ function afterAsyncDownload(ab) {
   log("done async phase");
 
   // Sync
-  var abSync = download(url, /*isAsyn*/ false);
+  var abSync = download(url, /*isAsync*/ false);
   return abSync.then(afterSyncDownload);
 }
 

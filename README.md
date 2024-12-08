@@ -12,18 +12,22 @@ XHR object.
 
 Note: use the lowercase string "xmlhttprequest-ssl" in your require(). On
 case-sensitive systems (eg Linux) using uppercase letters won't work.
+
+### Non-standard features ###
+
+Non-standard options for this module are passed through the `XMLHttpRequest` constructor. The following options control `https:` SSL requests: `ca`, `cert`, `ciphers`, `key`, `passphrase`, `pfx`, and `rejectUnauthorized`. You can find their functionality in the [Node.js docs](https://nodejs.org/api/https.html#httpsrequestoptions-callback).
+
+Additionally, the `agent` option allows you to specify a [Node.js Agent](https://nodejs.org/api/https.html#class-httpsagent) instance, allowing connection reuse.
+
+To prevent a process from not exiting naturally because a request socket from this module is still open, you can set `autoUnref` to a truthy value.
+
+This module allows control over the maximum number of redirects that are followed. You can set the `maxRedirects` option to do this. The default number is 20.
+
+Using the `allowFileSystemResources` option allows you to control access to the local filesystem through the `file:` protocol.
+
+The `origin` option allows you to set a base URL for the request. The resulting request URL will be constructed as follows `new URL(url, origin)`.
+
 # Original README #
-
-## Usage ##
-
-Here's how to include the module in your project and use as the browser-based
-XHR object.
-
-	var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-	var xhr = new XMLHttpRequest();
-
-Note: use the lowercase string "xmlhttprequest" in your require(). On
-case-sensitive systems (eg Linux) using uppercase letters won't work.
 
 ## Versions ##
 

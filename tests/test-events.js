@@ -1,5 +1,4 @@
-var sys = require("util")
-  , assert = require("assert")
+var assert = require("assert")
   , http = require("http")
   , XMLHttpRequest = require("../lib/XMLHttpRequest").XMLHttpRequest
   , xhr;

@@ -1,5 +1,4 @@
-var sys = require("util")
-  , assert = require("assert")
+var assert = require("assert")
   , XMLHttpRequest = require("../lib/XMLHttpRequest").XMLHttpRequest
   , spawn = require('child_process').spawn;
 
@@ -35,6 +34,7 @@ var runTest = function () {
     xhr.send();
   } catch(e) {
     console.log("ERROR: Exception raised", e);
+    throw e;
   }
 }
 

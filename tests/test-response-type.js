@@ -12,7 +12,6 @@
  *      [ "text", "", "arraybuffer", "blob", "json" ]
  *    and then various checks verify that the downloaded content is the same as that uploaded.
  */
-// @ts-check
 'use strict';
 
 const http = require("http");

@@ -1,5 +1,4 @@
-var sys = require("util")
-  , assert = require("assert")
+var assert = require("assert")
   , XMLHttpRequest = require("../lib/XMLHttpRequest").XMLHttpRequest
   , xhr = new XMLHttpRequest()
   , http = require("http");
@@ -77,5 +76,6 @@ try {
 
   xhr.send(body);
 } catch(e) {
-  console.log("ERROR: Exception raised", e);
+  console.error("ERROR: Exception raised", e);
+  throw e;
 }
